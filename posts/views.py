@@ -6,7 +6,6 @@ from .models import Post
 # Create your views here.
 class ListPosts(APIView):
     def get(self,request,format=None):
-        # usernames = [post.post_author for post in AllPostSerializers.objects.all()]
-        post = Post.objects.all()
-        usernames = AllPostSerializers(post,many=True)
-        return Response(usernames.data)
+        postModel = Post.objects.all()
+        postsJson = AllPostSerializers(postModel,many=True)
+        return Response(postsJson.data)

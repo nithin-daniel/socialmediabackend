@@ -25,11 +25,11 @@ class PostLikeView(APIView):
 
     @swagger_auto_schema(request_body=LikeSerializers)
     def post(self, request, format=None):
-        users = User.objects.filter(id__in=request.data.get("users"))
-        post = Post.objects.get(post_id=request.data.get("post"))
-        data = {"post": post, "users": users}
+        # users = User.objects.filter(id__in=request.data.get("users"))
+        # post = Post.objects.get(post_id=request.data.get("post"))
+        # data = {"post": post, "users": users}
 
-        serializer = LikeSerializers(data=data)
+        serializer = LikeSerializers(data=request.data)
         # serializer.save()
 
         if serializer.is_valid():

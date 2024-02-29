@@ -7,7 +7,6 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     initial = True
 
     dependencies = [
@@ -16,17 +15,31 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.CreateModel(
-            name='Post',
+            name="Post",
             fields=[
-                ('post_id', models.UUIDField(editable=False, primary_key=True, serialize=False, verbose_name=uuid.uuid4)),
-                ('post_title', models.CharField(max_length=300)),
-                ('post_description', models.TextField()),
-                ('post_posted_date', models.DateField(auto_now_add=True)),
-                ('post_last_updated_date', models.DateField(auto_now=True)),
-                ('post_uploaded_time', models.TimeField(auto_now_add=True)),
-                ('post_last_uploaded_time', models.TimeField(auto_now=True)),
-                ('post_image_link', models.ImageField(upload_to='posts/')),
-                ('post_author', models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
+                (
+                    "post_id",
+                    models.UUIDField(
+                        editable=False,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name=uuid.uuid4,
+                    ),
+                ),
+                ("post_title", models.CharField(max_length=300)),
+                ("post_description", models.TextField()),
+                ("post_posted_date", models.DateField(auto_now_add=True)),
+                ("post_last_updated_date", models.DateField(auto_now=True)),
+                ("post_uploaded_time", models.TimeField(auto_now_add=True)),
+                ("post_last_uploaded_time", models.TimeField(auto_now=True)),
+                ("post_image_link", models.ImageField(upload_to="posts/")),
+                (
+                    "post_author",
+                    models.OneToOneField(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to=settings.AUTH_USER_MODEL,
+                    ),
+                ),
             ],
         ),
     ]

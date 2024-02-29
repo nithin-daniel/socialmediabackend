@@ -30,3 +30,17 @@ class Post(models.Model):
     post_uploaded_time = models.TimeField(auto_now_add=True)
     post_last_uploaded_time = models.TimeField(auto_now=True)
     post_image_link = models.ImageField(upload_to='posts/')
+
+    def __str__(self):
+        return str(self.post_id)
+
+class Like(models.Model):
+    ''' like  Post '''
+
+    post = models.OneToOneField(Post, related_name="likes", on_delete=models.CASCADE)
+    users = models.ManyToManyField(User, related_name='requirement_comment_likes')
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return str(self.users)

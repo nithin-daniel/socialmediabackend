@@ -9,6 +9,7 @@ from .models import Post, Like
 from django.contrib.auth import authenticate, login
 from drf_yasg.utils import swagger_auto_schema
 from django.contrib.auth.models import User
+from django.shortcuts import get_object_or_404
 
 
 # Create your views here.
@@ -30,7 +31,7 @@ class PostLikeView(APIView):
         # like_filter = Like.objects.filter(post__post_id=like_id)
         # like_user_filter = like_filter.get(users=request.user)
         # if like_user_filter:
-        #     if like_user_filter.users in request.user:
+        #     if like_user_filter.users.exists():
         #         like_user_filter.users.remove(request.user)
         #         return Response("User removed", status=status.HTTP_201_CREATED)
         #     else:
@@ -53,17 +54,26 @@ class PostLikeView(APIView):
         # except Like.DoesNotExist:
         #     return Response("User not liked", status=status.HTTP_201_CREATED)   
 
+
         like_id = request.data['like_id']
         like_filter = Like.objects.filter(post__post_id=like_id).first()
-        print(like_filter)
-        like_user_filter = like_filter.get(users=request.user)
-        if request.user in like_user_filter:
-            like_filter.users.remove(request.user)
-            print("fund")
+        if request.user in like_filter.users.filter(requirement_comment_likes=request.user.id):
+            like_filter.users.remove(request.user.id)
         else:
-            like_filter.users.add(request.user)
-            print(like_filter.users)
-            print("not fund")
+            current_user = request.user
+            like_filter.users.add(current_user)
+
+
+        # like_filter = Like.objects.filter(post__post_id=like_id).first()
+        # print(like_filter)
+        # like_user_filter = like_filter.get(users=request.user)
+        # if request.user in like_user_filter:
+        #     like_filter.users.remove(request.user)
+        #     print("fund")
+        # else:
+        #     like_filter.users.add(request.user)
+        #     print(like_filter.users)
+        #     print("not fund")
         return Response("user dummy")
     def get(self, request, format=None):
         user = authenticate(request, username="sampleuser", password="sample@123")

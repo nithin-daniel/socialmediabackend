@@ -59,22 +59,12 @@ class PostLikeView(APIView):
         like_filter = Like.objects.filter(post__post_id=like_id).first()
         if request.user in like_filter.users.filter(requirement_comment_likes=request.user.id):
             like_filter.users.remove(request.user.id)
+            return Response("User Added Like",status=status.HTTP_200_OK)
         else:
             current_user = request.user
             like_filter.users.add(current_user)
-
-
-        # like_filter = Like.objects.filter(post__post_id=like_id).first()
-        # print(like_filter)
-        # like_user_filter = like_filter.get(users=request.user)
-        # if request.user in like_user_filter:
-        #     like_filter.users.remove(request.user)
-        #     print("fund")
-        # else:
-        #     like_filter.users.add(request.user)
-        #     print(like_filter.users)
-        #     print("not fund")
-        return Response("user dummy")
+            return Response("User Removed Like",status=status.HTTP_200_OK)
+        
     def get(self, request, format=None):
         user = authenticate(request, username="sampleuser", password="sample@123")
         if user is not None:

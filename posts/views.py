@@ -10,7 +10,10 @@ from django.contrib.auth import authenticate, login
 from drf_yasg.utils import swagger_auto_schema
 from django.contrib.auth.models import User
 from django.shortcuts import get_object_or_404
+from django.contrib.auth.models import User
 
+
+import json
 
 # Create your views here.
 class ListPosts(APIView):
@@ -49,3 +52,31 @@ class PostLikeView(APIView):
         else:
             print("not auth")
         return Response("user auth")
+
+
+class PostAddView(APIView):
+    permission_classes = [AllowAny]
+    @swagger_auto_schema(request_body=LikeSerializers)
+    
+    def post(self, request, format=None):
+        post_items = request.data
+        new_post = Post(post_author=request.user,post_title=post_items['post_title'],post_description=post_items['post_description'],post_image_link=post_items['post_image_link'])
+        new_post.save()
+        return Response("User Added Like",status=status.HTTP_200_OK)
+
+        
+class TestLoginView(APIView):
+        
+        def get(self, request, format=None):
+            user = authenticate(request, username="sampleuser", password="sample@123")
+            if user is not None:
+                login(request, user)
+                print(request.user)
+                print("done")
+            else:
+                print("nothing done")
+            if request.user.is_authenticated:
+                print("authenticated")
+            else:
+                print("not auth")
+            return Response("user auth")

@@ -31,7 +31,10 @@ class Post(models.Model):
     post_last_updated_date = models.DateField(auto_now=True)
     post_uploaded_time = models.TimeField(auto_now_add=True)
     post_last_uploaded_time = models.TimeField(auto_now=True)
-    post_image_link = models.ImageField(upload_to="posts/")
+    post_image_link = models.TextField()
+
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         return str(self.post_id)

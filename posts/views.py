@@ -60,9 +60,9 @@ class PostAddView(APIView):
     
     def post(self, request, format=None):
         post_items = request.data
-        new_post = Post(post_author=request.user,post_title=post_items['post_title'],post_description=post_items['post_description'],post_image_link=post_items['post_image_link'])
+        new_post = Post(post_title=post_items['post_title'],post_description=post_items['post_description'],post_image_link=post_items['post_image_link']) #post_author=request.user,
         new_post.save()
-        return Response("User Added Like",status=status.HTTP_200_OK)
+        return Response("User Post Added",status=status.HTTP_200_OK)
 
         
 class TestLoginView(APIView):

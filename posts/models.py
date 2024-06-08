@@ -24,7 +24,7 @@ post_dislike
 
 class Post(models.Model):
     post_id = models.UUIDField(default=uuid.uuid4, editable=False, primary_key=True)
-    post_author = models.ForeignKey(User, on_delete=models.CASCADE)
+    # post_author = models.ForeignKey(User, on_delete=models.CASCADE)
     post_title = models.CharField(max_length=300)
     post_description = models.TextField()
     post_posted_date = models.DateField(auto_now_add=True)
